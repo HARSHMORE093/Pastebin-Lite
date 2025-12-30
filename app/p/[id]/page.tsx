@@ -1,6 +1,4 @@
 import { redis } from "@/lib/redis";
-import { getNowMs } from "@/lib/time";
-import DOMPurify from "isomorphic-dompurify";
 
 function escapeHtml(text: string) {
   return text
@@ -16,6 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const obj = JSON.parse(raw);
   const now = Date.now();
+
   if (obj.ttl_seconds && now >= obj.created_at + obj.ttl_seconds * 1000)
     return <h1>404 – Not Found</h1>;
 
